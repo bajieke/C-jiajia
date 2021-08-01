@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	//  sizeof(arr)  一维数组大小空间
+
+	int arr[2][3] = { {1,2,3},{4,5,6} };
+
+	//cout <<sizeof(arr) << endl;          //二维数组所占用的内存空间
+	//cout << sizeof(arr[0]) << endl;      //二维数组，一行所占用的内存空间
+	//cout << sizeof(arr[0][0]) << endl;   //一个元素所占用的内存空间
+
+	//cout << sizeof(arr) / sizeof(arr[0][0]) << endl;
+
+	//cout << "二位数组行数：" << sizeof(arr) / sizeof(arr[0]) << endl;
+	//cout << "二维数组的列数：" << sizeof(arr[0]) / sizeof(arr[0][0]) << endl; 
+
+	cout << "二维数组首地址：" << (int)arr << endl;
+	cout << "第一行首地址："<<(int) arr[0] << endl;
+	cout << "第二行首地址： "<< (int)arr[1] << endl;
+
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			cout <<(int) &arr[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
