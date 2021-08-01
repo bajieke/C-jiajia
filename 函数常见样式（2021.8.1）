@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+//
+//函数的常见样式
+
+//1、没有参数，没有返回值
+void test01()
+{
+	cout << "调用了test01" << endl;
+}
+
+//2、没有参数，有返回值
+int test02()
+{
+	cout << "调用了test02" << endl;
+	return 100;
+}
+
+
+//3、有参数，没有返回值
+void test03(int num)
+{
+	cout << "调用了test03    num=" << num << endl; 
+}
+
+
+//4、有参数，有返回值
+int test04(int num)
+{
+	cout << "调用了test04  num=" << num << endl;
+	return 9999;
+}
+
+int main()
+{
+	test01();
+
+	int num1 = test02();
+	cout << "num1=" << num1 << endl;
+
+	test03(1000);
+
+	int num2 = test04(88);
+	cout << "num2=" << num2 << endl;
+
+	
+	return 0;
+}
+ 
