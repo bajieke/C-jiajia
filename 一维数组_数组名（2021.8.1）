@@ -1,0 +1,20 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	int arr[10] = { 1,2,3,4,5,6,7,8,9,10 };
+	cout << (int)arr << endl;    //数组名，首地址
+	for (int i = 0; i < 10; i++)
+	{
+		cout << (int)&arr[i] << " ";
+	}
+	cout << endl;
+
+	cout << sizeof(arr) << endl;    //sizeof(arr)  数组长度
+	cout << sizeof(arr[0]) << endl;     //数组元素长度
+	cout << sizeof(arr) / sizeof(arr[0]) << endl;     //数组个数
+
+
+	return 0;
+}
