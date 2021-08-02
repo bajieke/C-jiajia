@@ -1,0 +1,27 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+
+	//1.常量指针
+	const int* p1 = &a;
+	//*p1 = 20;   //错
+	p1 = &b;   //对
+
+
+	//2.指针常量
+	int* const p2 = &a;
+	*p2 = 20;  //对
+	//p2 = &b;   //错
+
+
+	//3.
+	const int* const p3 = &a;
+	//*p3 = 20;   //错
+	//p3 = &b;    //错
+
+	return 0;
+}
