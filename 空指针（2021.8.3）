@@ -1,0 +1,13 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	//空指针指向 地址编号为0
+	//空指针不允许访问  （0~255之间内存系统占用，不允许访问）
+
+	int* p = NULL;    //#define NULL 0
+	//*p = 100;   //错误，空指针不允许访问
+
+	return 0;
+}
