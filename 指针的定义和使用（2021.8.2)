@@ -1,0 +1,23 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	int a = 10;
+	int *p = &a;   //指针p指向a的地址
+
+	cout << "a的地址：" << (int)&a << endl;
+	cout << "指针p的值：" << (int)p << endl;     //p=&a
+	cout << "*p: " << *p << endl;         //*p=a=10;
+	cout << "&p: " <<(int) &p << endl;
+
+	cout << "a=" << a << endl;
+	cout << "*p=" << *p << endl;
+
+	//*p = 999;
+	a = 89l;
+	cout << "a=" << a << endl;
+	cout << "*p=" << *p << endl;
+
+	return 0;
+}
