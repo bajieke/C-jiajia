@@ -1,0 +1,41 @@
+#include<iostream>
+using namespace std;
+
+//冒泡排序      参数1：数组首地址
+void bubbleSort(int *brr, int n)
+{
+	for (int i = 0; i < n - 1; i++)   //外层循环代表：轮数
+	{
+		for (int j = 0; j < n - i - 1; j++)    //内层循环代表：每轮次数
+		{
+			if (brr[j] > brr[j + 1])
+			{
+				int temp = brr[j];
+				brr[j] = brr[j + 1];
+				brr[j + 1] = temp;
+			}
+		}
+	}
+}
+
+void printArray(int* brr, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		cout << brr[i] << "  ";
+	}
+	cout << endl;
+}
+
+int main()
+{
+	int arr[10] = { 4,3,6,9,1,2,10,8,7,5 };
+	int len = sizeof(arr) / sizeof(arr[0]);
+
+	bubbleSort(arr, len);
+
+	printArray(arr, len);
+
+	system("pause");
+	return 0;
+}
