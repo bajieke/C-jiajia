@@ -1,0 +1,20 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	int a = 10;
+	int* p = &a;
+
+	//不管什么数据类型
+	//32位操作系统，指针占用内存4字节 （指针保存的内容就是地址）
+	//64位操作系统，指针占用内存8字节
+
+	cout << "sizeof(p)=" << sizeof(p) << endl;
+	cout << "sizeof(int *)=" << sizeof(int *) << endl;
+	cout << "sizeof(float *)=" << sizeof(float *) << endl;
+	cout << "sizeof(double *)=" << sizeof(double *) << endl;
+	cout << "sizeof(char *)=" << sizeof(char *) << endl;
+
+	return 0;
+}
