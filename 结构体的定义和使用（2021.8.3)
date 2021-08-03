@@ -1,0 +1,41 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+//自定义数据类型
+struct Student
+{
+	string name;
+	int age;
+	float score;
+}s3;    //顺便定义结构体变量
+
+int main()
+{
+	//通过学生类型创建具体学生
+	//1.struct Student s1;     
+	//C++中，struct关键字可以省略
+	Student s1;
+	//struct Student s1;
+	s1.name = "张三";       //name 为字符串
+	s1.age = 15;
+	s1.score = 98.5;
+
+	cout << "姓名：" << s1.name << "  年龄：" << s1.age << "  成绩:" << s1.score << endl;
+
+
+	//2.struct Student s2={};
+	//struct Student s2 = { "李四",15,89.5 };
+	Student s2 = { "李四",15,89.5 };
+	cout << "姓名：" << s2.name << "  年龄：" << s2.age << "  成绩:" << s2.score << endl;
+
+
+	//3.定义结构体时，顺便定义结构体变量
+	s3.name = "王五";
+	s3.age = 16;
+	s3.score = 78;
+
+	cout << "姓名：" << s3.name << "  年龄：" << s3.age << "  成绩:" << s3.score << endl;
+
+	return 0;
+}
