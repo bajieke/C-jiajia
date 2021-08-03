@@ -1,0 +1,101 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+struct Student
+{
+	string name;
+	int age;
+	float score;
+};
+
+struct Teacher
+{
+	int id;
+	string name;
+	struct Student stu;
+};
+
+//void createTeacher(struct Teacher* tcher)
+//{
+//	tcher->id = 1011;
+//	tcher->name = "张丽丽";
+//
+//	tcher->stu.name = "张三";
+//	tcher->stu.age = 15;
+//	tcher->stu.score = 0.8;
+//}
+
+struct Teacher createTeacher(int id,string tname,string sname,int age,float score)
+{
+	struct Teacher tcher;
+	tcher.id = id;
+	tcher.name = tname;
+	tcher.stu.name = sname;
+	tcher.stu.age = age;
+	tcher.stu.score = score;
+
+	return tcher;
+}
+
+void printTeacher(struct Teacher *tcher)
+{
+	cout << "教师编号：" << tcher->id << endl;
+	cout << "教师姓名：" << tcher->name << endl << endl;
+	cout << "教师所带学生信息：" << endl;
+	cout << "姓名：" << tcher->stu.name << endl;
+	cout << "年龄：" << tcher->stu.age << endl;
+	cout << "成绩：" << tcher->stu.score << endl << endl;
+}
+
+int main()
+{
+	struct Teacher tch;
+
+	//createTeacher(&tch);
+
+	tch=createTeacher(1012, "张磊", "范小华", 15, 0.7);
+
+	printTeacher(&tch);
+
+
+	//tch.id = 1011;
+	//tch.name = "张丽丽";
+
+	//tch.stu.name = "张三";
+	//tch.stu.age = 15;
+	//tch.stu.score = 0.8;
+
+
+	/*----------------结构体包含结构体数组-------------*/
+	//tch.stu[0].name = "张三";
+	//tch.stu[1].age = 15;
+	//tch.stu[2].score = 0.8;
+
+	//tch.stu[0].name = "李四";
+	//tch.stu[1].age = 15;
+	//tch.stu[2].score = 1.0;
+
+	//cout << "教师编号：" << tch.id << endl;
+	//cout << "教师姓名：" << tch.name << endl << endl;
+	//cout << "教师所带学生信息：" << endl;
+	//cout << "姓名：" << tch.stu.name << endl;
+	//cout << "年龄：" << tch.stu.age << endl;
+	//cout << "成绩：" << tch.stu.score << endl << endl;
+
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	cout << "第" << i+1 << "个学生" << endl;
+	//	cout << "姓名：" << tch.stu[i].name << endl;
+	//	cout << "年龄：" << tch.stu[i].age << endl;
+	//	cout << "成绩：" << tch.stu[i].score << endl << endl;
+	//}
+
+	/*--------------指针指向 包含结构体的结构体-------------*/
+	//struct Teacher* p1 = &tch;
+
+	//cout << endl << p1->name << endl;
+	//cout << p1->stu.name << endl;
+
+	return 0;
+}
