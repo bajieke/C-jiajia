@@ -1,0 +1,35 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+struct Student
+{
+	string name;
+	int age;
+	float score;
+};
+
+int main()
+{
+	//通过指针访问结构体成员
+	
+	struct Student s = { "张三",15,88 };
+	struct Student* p = &s;
+
+	cout << "姓名：" << p->name << "  年龄：" << p->age << "  成绩：" << p->score << endl;
+
+	struct Student stuArray[2] = {
+		{"李四",15,75},
+		{"王五",16,100}
+	};
+
+	struct Student* p1 = stuArray;
+
+	cout << "姓名：" << p1->name << "  年龄：" << p1->age << "  成绩：" << p1->score << endl;
+
+	p1++;
+	cout << "姓名：" << p1->name << "  年龄：" << p1->age << "  成绩：" << p1->score << endl;
+
+
+	return 0;
+}
