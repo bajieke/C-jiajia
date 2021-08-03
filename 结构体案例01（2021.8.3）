@@ -1,0 +1,66 @@
+#include<iostream>
+using namespace std;
+#include<string>
+#include<ctime>
+
+struct Student
+{
+	string sname;
+	float score;
+};
+
+struct Teacher
+{
+	string tname;
+	struct Student sArray[5];
+};
+
+//给老师和学生赋值，参数1：可以指针传递，也可以数组传递（更直观一点，一眼看出来传的是数组）
+void createTeacher(struct Teacher tArray[], int len,int snum)
+{
+	string nameSeed = "ABCDE";
+	for (int i = 0; i < len; i++)
+	{
+		tArray[i].tname = "Teacher_";
+		tArray[i].tname += nameSeed[i];
+		for (int j = 0; j < snum; j++)
+		{
+			float score = rand() % 55 + 45;    //0+35=35 ~ 65+35=100    
+			tArray[i].sArray[j].sname = "Student_";
+			tArray[i].sArray[j].sname += nameSeed[j];
+			tArray[i].sArray[j].score = score;
+		}
+	}
+}
+
+void printTeacher(struct Teacher tArray[],int len,int snum)
+{
+	for (int i = 0; i < len; i++)
+	{
+		cout << "教师：" << tArray[i].tname << endl;
+		for (int j = 0; j < snum; j++)
+		{
+			cout << "\t学生姓名：" << tArray[i].sArray[j].sname;
+			cout << " 成绩：" << tArray[i].sArray[j].score << endl;
+		}
+		cout << endl;
+	}
+}
+
+
+int main()
+{
+	srand((unsigned int)time(NULL));
+
+	//1.创建三个老师
+	struct Teacher tArray[3];
+	int len = sizeof(tArray) / sizeof(tArray[0]);
+
+	//2.给三个老师赋值
+	createTeacher(tArray, len,5);
+
+	//3.显示成员
+	printTeacher(tArray, len,5);
+
+	return 0;
+}
