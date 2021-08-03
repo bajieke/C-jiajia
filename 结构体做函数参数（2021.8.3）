@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+struct Student
+{
+	string name;
+	int age;
+	float score;
+};
+
+//值传递
+void printStudent1(struct Student stu)
+{
+	cout << endl << "在值传递函数中" << endl;
+	stu.age = 10000;
+	cout << "姓名：" << stu.name;
+	cout << "  年龄:" << stu.age;
+	cout << "  成绩：" << stu.score << endl;
+}
+
+//地址传递
+void printStudent(struct Student* p)
+{
+	cout << endl << "在地址传递函数中" << endl;
+	p->age = 2000;
+	cout << "姓名：" << p->name;
+	cout << "  年龄：" << p->age;
+	cout << "  成绩：" << p->score << endl;
+}
+
+int main()
+{
+	struct Student s;
+
+	s.name = "范小花";
+	s.age = 22;
+	s.score = 90;
+
+	//1.值传递,不想对结构体元素修改，用值传递
+	printStudent1(s);
+
+	//2.地址传递，相对结构体元素修改，用地址传递
+	printStudent(&s);
+
+	cout << endl << "在main 函数中" << endl;
+	cout << "姓名：" << s.name << "  年龄：" << s.age << "  成绩：" << s.score << endl;
+
+	return 0;
+}
