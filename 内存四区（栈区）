@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+
+//函数参数
+int* func(int b)
+{
+	int a = 10;
+	cout << "func()中局部变量a的地址：" << (int)&a << endl;
+	cout << "func()中函数参数b的地址：" << (int)&b << endl << endl;
+	return &a;
+}
+
+int main()
+{
+	//函数参数、局部变量
+	//不要返回局部变量的地址，栈区开辟内存由编译器自动释放
+	int* p = func(20);
+	cout << "打印第一次，返回局部变量：" << *p << endl << endl;   //正确、编译器做了保留
+	cout << "打印第二次，返回局部变量：" << *p << endl << endl;   //乱码、第二次就不保留了
+
+
+	//局部变量
+	int a = 10;
+	int b = 20;
+	cout << "main中局部变量a的地址：" << (int)&a << endl;
+	cout << "main中局部变量b的地址：" << (int)&b << endl << endl;
+
+	//const局部常量
+	const int c_a = 10;
+	const int c_b = 20;
+	cout << "main中const 局部常量c_a地址：" << (int)&c_a << endl;
+	cout << "main中const 局部常量c_b地址：" << (int)&c_b << endl;
+
+	system("pause");
+	return 0;
+}
