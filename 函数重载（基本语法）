@@ -1,0 +1,42 @@
+#include<iostream>
+using namespace std;
+
+//参数个数不同
+void func()
+{
+	cout << "func()的调用 1 " << endl;
+}
+
+//参数类型不同
+void func(int a)
+{
+	cout << "func(int a)的调用 2 " << endl;
+}
+
+void func(double a)
+{
+	cout << "func(double a)的调用 3" << endl;
+}
+
+//参数顺序，不同（参数间是不同类型）
+void func(double a, int b)
+{
+	cout << "func(double a,int b)的调用 4 " << endl;
+}
+
+void func(int a, double b)
+{
+	cout << "func(int b,double a)的调用 5" << endl;
+}
+
+int main()
+{
+	func();
+	func(10);
+	func(2.5);
+	func(10.9, 20);
+	func(20, 10.8);
+
+	system("pause");
+	return 0;
+}
