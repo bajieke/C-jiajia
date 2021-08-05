@@ -1,0 +1,42 @@
+#include<iostream>
+using namespace std;
+
+int& test01()
+{
+	int a = 10;       //a在栈区开辟内存
+	return a;         //返回在栈区开辟的内存，以引用的方式
+}
+
+int& test02()
+{
+	static int a = 20;   //静态变量，存放在全局区，操作系统回收，声明周期长，程序运行的整个时间存在
+	return a;
+}
+
+
+int main()
+{
+	//1、不要返回局部变量的引用
+	//2、函数的调用可以作为左值
+
+	int& ret = test01();       //以引用的方式，接收函数返回值，则函数返回值类型要为引用
+
+											  //函数调用之后，保存在栈区的test01局部变量销毁
+	cout << "ret=" << ret << endl;            //正确，第一次，编译器做了保留，可以知道栈区的局部变量a
+	cout << "ret=" << ret << endl << endl;	  //乱码，第一次后，不做保留，不知道a了
+
+
+	int& ret2 = test02();
+	cout << "ret=" << ret2 << endl;			   //正确,20
+	cout << "ret=" << ret2 << endl << endl;    //正确,20
+
+	test02() = 30;     //test02()函数相当于一个变量
+	cout << "ret=" << ret2 << endl;			   //正确,30
+	cout << "ret=" << ret2 << endl << endl;    //正确,30
+
+
+
+
+	system("pause");
+	return 0;
+}
