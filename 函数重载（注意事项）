@@ -1,0 +1,68 @@
+#include<iostream>
+using namespace std;
+
+
+//	int 和 const int   ??
+//void func(int a)
+//{
+//	cout << "func(int a) " << endl;
+//}
+//
+//void func(const int a)
+//{
+//	cout << "func(const int a) " << endl;
+//}-----------------------------------------------------//错误
+
+
+// int&  和  const int&  类型不同
+void func(int& a)   //int& a=10; ×   引用定义时初始化
+{
+	cout << "func(int& a) " << endl;
+}
+
+void func(const int& a)   //const int& a=10;  √ 碰到 const+& ,编译器自动创建temp,temp=10
+{
+	cout << "func(const int& a) " << endl;
+}//---------------------------------------------------//正确
+
+
+//想函数重载，别加默认参数
+void func2(int a,int b=10)    //函数重载，用了默认参数，容易有二义性
+{
+	cout << "func(int a,int b)" << endl;
+}
+
+void func2(int a)
+{
+	cout << "func(int a)" << endl;
+}
+
+int main()
+{
+	int a = 10;
+	const int b = 20;
+
+	func(a);      //func(int& a)，a是变量  //int& a=10;		错
+	
+	func(b);      //func(const int& a)，b是const int   const int&a=10;  对
+
+	func(30);     //func(const int& a),10是常量
+
+	int c = 30;   //引用本质：指针常量
+	int& d = c;   //int* const d=&c；    
+	func(d);
+
+	int ct = 30;		  
+	const int& dt = ct;   //常量引用，防止修改ct    int -> const int&
+	func(dt);
+
+	//const int cf = 30;
+	//int& df = cf;     //错，               无法由 const int -> int&
+	//func(df);
+
+	//func2(10);   出错，有二义性
+	func2(10, 20);
+
+	system("pause");
+	return 0;
+}
