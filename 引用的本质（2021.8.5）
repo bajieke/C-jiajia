@@ -1,0 +1,25 @@
+#include<iostream>
+using namespace std;
+
+//发现是引用，转换为：int* const ref = &a;
+void func(int& ref)
+{
+	ref = 100;  //内部发现ref为引用，自动转换为 *ref=100;
+}
+
+int main()
+{
+	int a = 10;
+
+	//引用的本质：指针常量
+	int& ref = a;    //int* const ref = &a;    //ref为指针常量
+	ref = 20;    //内部发现ref是引用，自动转换成  *ref=20;
+
+	cout << "a=" << a << endl;
+	cout << "ref=" << ref << endl;
+
+	func(a);	//int* const ref = &a;
+
+	system("pause");
+	return 0;
+}
