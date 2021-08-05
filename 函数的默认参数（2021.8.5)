@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+
+int func01(int x = 10, int y = 20)
+{
+	return x + y;
+}
+
+//int func02(int a, int b=2, int c)   //  ×，默认参数不在形参列表的末尾
+//{
+//	return a + b + c;
+//}
+
+
+//函数定义和声明中，默认参数只能定义一次，否则产生二义性
+
+//只在实现中定义默认参数
+int func03(int a , int b );
+
+int func03(int a, int b=70)
+{
+	return a + b;
+}
+
+//只在声明中定义默认参数
+int func04(int a, int b = 90);
+
+int func04(int a, int b)
+{
+	return a + b;
+}
+
+
+
+int main()
+{
+	//如果函数声明有默认参数，实数实现就不能有默认参数
+	//不能重定义，有二义性
+
+	cout << func01(10, 10) << endl;
+	cout << func01(30) << endl;
+
+	cout << func03(20, 20) << endl;
+	cout << func03(50) << endl;
+
+	cout << "func04  " << func04(10) << endl;
+
+	system("pause");
+	return 0;
+}
