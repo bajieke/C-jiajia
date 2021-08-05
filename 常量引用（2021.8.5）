@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+
+void printA(const int& a)		//引用目的：防止产生副本，浪费内存。（加上const：是防止修改实参）
+{
+	//a = 999;
+	cout << "printA()  a=" << a << endl;
+}
+
+int main()
+{
+	//int& ref = 10;		   //×，引用本身需要一个合法的空间
+	//const int& ret = 20;   //√，加上const,编译器优化代码，创建临时变量temp=10
+	//					   //    然后，const int& ref=temp;
+
+	int a = 10;
+	cout << "main()  a=" << a << endl;
+
+	printA(a);
+
+	cout << "main()  a=" << a << endl;
+
+
+	system("pause");
+	return 0;
+}
