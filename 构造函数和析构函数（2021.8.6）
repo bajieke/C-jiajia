@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+
+//对象的初始化和清理
+class Person
+{
+public:
+	Person()
+	{
+		cout << "调用Person的构造函数" << endl;
+	}
+	~Person()  //对象销毁前,调用析构函数
+	{
+		cout << "调用Person的析构函数" << endl;
+	}
+};
+
+void test01()
+{
+	Person per;    //栈上创建对象，函数调用介绍后，会销毁
+}
+
+int main()
+{
+	//test01();
+
+	Person per1;     //栈上创建对象，main函数结束后，才调用析构（对象销毁前）
+
+	system("pause");
+	return 0;
+}
