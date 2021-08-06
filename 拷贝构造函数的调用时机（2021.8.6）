@@ -1,0 +1,77 @@
+#include<iostream>
+using namespace std;
+
+//拷贝构造函数调用时机
+ 
+class Person
+{
+public:
+	Person()
+	{
+		cout << "构造函数的调用" << endl;
+	}
+	Person(int age)
+	{
+		m_Age = age;
+		cout << "拷贝构造函数的调用" << endl;
+	}
+	Person(const Person& p)
+	{
+		m_Age = p.m_Age;
+		cout << "拷贝构造函数的调用" << endl;
+	}
+	~Person()
+	{
+		cout << "析构函数的调用" << endl;
+	}
+public:
+	int m_Age;
+};
+
+
+//1.使用一个已经创建完备的对象来初始化一个新对象
+void test01()
+{
+	Person p1;
+	Person p2(p1);
+}
+
+//2.值传递的方式给函数参数传值
+void func(Person p)
+{
+
+}
+void test02()
+{
+	Person p1;
+	func(p1);
+}
+
+//3.值方式返回局部对象
+Person func02()
+{
+	Person p;
+	cout << &p << endl;
+	return p;  //返回时，新创建（拷贝）一个对象
+}				//先拷贝，后析构
+void test03()
+{
+	Person p = func02();
+	cout << &p << endl;
+}
+
+
+int main()
+{
+	// Person p1(p);  
+	// Person p2 = Person(p);
+	// Person p2 = p;
+
+	//test01();
+	//test02();
+	test03();
+
+
+	system("pause");
+	return 0;
+}
