@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+
+//protected		派生类可以访问父类
+//private		始终不可访问
+
+//public			类外可以访问
+//private		类外不可访问
+//protected		类外不可访问
+
+class Person
+{
+private:
+	int m_Password;
+protected:
+	string m_Car;
+public:
+	string m_Name;
+public:
+	void func()
+	{
+		m_Name = "张三";
+		m_Car = "宝马";
+		m_Password = 112233;
+	}
+};
+
+int main()
+{
+	Person p1;
+	p1.m_Name = "李四";
+	//p1.m_Car = "奔驰";
+	//p1.m_Password = 12345;
+
+
+	system("pause");
+	return 0;
+}
