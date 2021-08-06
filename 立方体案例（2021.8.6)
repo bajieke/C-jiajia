@@ -1,0 +1,106 @@
+#include<iostream>
+using namespace std;
+
+class Cube
+{
+public:
+	void setLength(int l)
+	{
+		m_Length = l;
+	}
+	int getLength()
+	{
+		return m_Length;
+	}
+	void setWidth(int w)
+	{
+		m_Width = w;
+	}
+	int getWidth()
+	{
+		return m_Width;
+	}
+	void setHigth(int h)
+	{
+		m_Hight = h;
+	}
+	int getHight()
+	{
+		return m_Hight;
+	}
+	int calculateS()
+	{
+		int s = (m_Length * m_Width + m_Length * m_Hight + m_Width * m_Hight) * 2;
+		return s;
+	}
+	int calculateV()
+	{
+		return  m_Length * m_Width * m_Hight;
+	}
+	//判断两立方体是否相等
+	bool isSameByClass(Cube& c2)
+	{
+		if (m_Length == c2.m_Length && m_Width == c2.m_Width && m_Hight == c2.m_Hight)
+		{
+			return true;
+		}
+		return false;
+	}
+private:
+	int m_Length;
+	int m_Width;
+	int m_Hight;
+};
+
+//全局函数判断两立方体是否相等
+bool isSame(Cube &c1, Cube &c2)
+{
+	if (c1.getLength() == c2.getLength() && c1.getWidth() == c2.getWidth() && c1.getHight() == c2.getHight())
+	{
+		return true;
+	}
+	return false;
+}
+
+int main()
+{
+	Cube c1;
+	c1.setLength(10);
+	c1.setHigth(10);
+	c1.setWidth(10);
+
+	cout << "面积：" << c1.calculateS() << endl;
+	cout << "体积：" << c1.calculateV() << endl;
+
+
+	Cube c2;
+	c2.setLength(10);
+	c2.setHigth(10);
+	c2.setWidth(10);
+
+	//全局函数判断两立方体是否相等
+	bool ret = isSame(c1, c2);		//要两个参数
+	if (ret == true)
+	{
+		cout << "全局函数：c1 和 c2相等。" << endl;
+	}
+	else
+	{
+		cout << "全局函数：c1 和 c2 不相等。" << endl;
+	}
+
+	//成员函数判断两立方体是否相等
+	bool ret2 = c1.isSameByClass(c2);   //只要一个参数
+	if (ret2 == true)
+	{
+		cout << "成员函数：c1 和 c2相等。" << endl;
+	}
+	else
+	{
+		cout << "成员函数；c1 和 c2 不相等。" << endl;
+	}
+
+
+	system("pause");
+	return 0;
+}
