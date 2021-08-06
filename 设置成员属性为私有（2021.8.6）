@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+//成员设置为私有
+//1.自己控制读写权限
+//2.对于写可以检测数据的有效性  if()判断
+
+class Person
+{
+public:
+	//姓名，读写权限
+	void setName(string name)
+	{
+		m_Name = name;
+	}
+	string getName()
+	{
+		return m_Name;
+	}
+	//年龄，读写，
+	void setAge(int age)
+	{
+		if (age < 0 || age>140)
+		{
+			cout << "年龄输入不在有效范围！" << endl;
+			return;
+		}
+		m_Age = age;
+	}
+	int getAge()
+	{
+		return m_Age;
+	}
+	//爱人，只写权限
+	void setLover(string lover)
+	{
+		m_Lover = lover;
+	}
+private:
+	string m_Name;  //读写权限
+	int m_Age = 0;		//读写
+	string m_Lover;	 //只写权限
+};
+
+int main()
+{
+	Person p1;
+	//p1.m_Name = "张三";  错误
+	p1.setName("张三");
+	cout << "姓名：" << p1.getName() << endl;
+
+	p1.setAge(19);
+	cout << "年龄：" << p1.getAge() << endl;
+
+	p1.setLover("李四");
+
+	system("pause");
+	return 0;
+}
