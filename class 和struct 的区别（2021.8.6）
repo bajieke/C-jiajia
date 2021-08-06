@@ -1,0 +1,24 @@
+#include<iostream>
+using namespace std;
+
+struct C1
+{
+	int a;
+};
+
+class C2
+{
+	int m_A;
+};
+
+int main()
+{
+	struct C1 c1;
+	c1.a = 10;		//默认共有
+
+	class C2 c2;
+	//c2.m_A = 20;	默认私有
+
+	system("pause");
+	return 0;
+}
