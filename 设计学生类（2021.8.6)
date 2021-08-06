@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+//学生类
+class Student
+{
+public:
+	string m_Name;
+	string m_Id;
+public:
+	void setName(string name)
+	{
+		m_Name = name;
+	}
+	void setId(string id)
+	{
+		m_Id = id;
+	}
+	void showStudent()  //内联函数
+	{
+		cout << "姓名；" << m_Name;
+		cout << "  学号：" << m_Id << endl;
+	}
+};
+
+int main()
+{
+	//1
+	Student s1;
+	s1.m_Name = "张三";
+	s1.m_Id = "1100101";
+
+	s1.showStudent();
+	
+	//2
+	Student s2;
+	s2.m_Name = "李四";
+	s2.m_Id = "1100102";
+
+	s2.showStudent();
+
+	//3 
+	Student s3;
+	s3.setName("范小花");
+	s3.setId("1100103");
+
+	s3.showStudent();
+
+
+
+	system("pause");
+	return 0;
+}
