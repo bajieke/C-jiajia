@@ -1,0 +1,95 @@
+#include<iostream>
+using namespace std;
+
+
+//点类
+class Point
+{
+public:
+	void setX(int x)
+	{
+		m_X = x;
+	}
+	int getX()
+	{
+		return m_X;
+	}
+	void setY(int y)
+	{
+		m_Y = y;
+	}
+	int getY()
+	{
+		return m_Y;
+	}
+private:
+	int m_X;
+	int m_Y;
+};
+
+//圆类
+class Circle
+{
+public:
+	void setR(int r)
+	{
+		m_R = r;
+	}
+	int getR()
+	{
+		return m_R;
+	}
+	void setCenter(Point center)
+	{
+		m_Center = center;
+	}
+	Point getCenter()
+	{
+		return m_Center;
+	}
+private:
+	int m_R;
+	Point m_Center;
+};
+
+void IsInCircle(Circle& c, Point& p)
+{
+	int r = c.getR() * c.getR();
+	int len = (p.getX() - c.getCenter().getX()) * (p.getX() - c.getCenter().getX()) +
+		(p.getY() - c.getCenter().getY()) * (p.getY() - c.getCenter().getY());
+	if (len < r)
+	{
+		cout << "点在圆内" << endl;
+	}
+	else if (r == len)
+	{
+		cout << "点在圆上" << endl;
+	}
+	else
+	{
+		cout << "点在圆外" << endl;
+	}
+}
+
+
+int main()
+{
+	//类做为另一个类的成员
+	Circle c;
+	Point p1;
+	p1.setX(0);
+	p1.setY(0);
+	c.setCenter(p1);
+	c.setR(10);
+	
+
+	Point p;
+	p.setX(1);
+	p.setY(1);
+
+	IsInCircle(c, p);
+
+
+	system("pause");
+	return 0;
+}
