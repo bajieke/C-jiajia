@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+
+class Person
+{
+public:
+	Person(int age)
+	{
+		m_Age = new int(age);
+	}
+	~Person()
+	{
+		if (m_Age != NULL)
+		{
+			delete m_Age;
+			m_Age = NULL;
+		}
+	}
+	Person& operator=(Person& p)
+	{
+		//深拷贝之前，调用构造函数，堆区已经有内容了
+		//先释放原有堆区内容，再进行深拷贝（重新在堆区申请空间）
+		if (m_Age != NULL)
+		{
+			delete m_Age;
+			m_Age = NULL;
+		}
+		//堆区重新创建
+		this->m_Age = new int(*p.m_Age);
+
+		//返回对象本身
+		return *this;
+	}
+public:
+	int* m_Age;  //类中成员变量，指针，保存堆区开辟空间的地址
+};
+
+void test01()
+{
+	Person p1(19);
+	Person p2(20);
+	Person p3(21);
+
+	//p2 = p1;  //堆区内存重复释放，堆区崩溃
+	//		  //利用深拷贝，解决浅拷贝
+
+	p3 = p2 = p1;  //p2=p1,应该返回本身p2
+
+	cout << "p1的年龄：" << *p1.m_Age << endl;
+	cout << "p2的年龄：" << *p2.m_Age << endl;
+	cout << "p3的年龄：" << *p3.m_Age << endl;
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
