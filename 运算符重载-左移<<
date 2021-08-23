@@ -1,0 +1,48 @@
+#include<iostream>
+using namespace std;
+
+class Person
+{
+public:
+	Person(int a, int b)
+	{
+		m_A = a;
+		m_B = b;
+	}
+	friend  ostream& operator<<(ostream& out, Person& p);
+public:
+	//p.operator(cout)  p<<cout
+	//不会利用成员函数重载左移运算符
+	//void opretor<< (Person& p);  //p.operator<<(p)  ×
+private:
+	int m_A;
+	int m_B;
+};
+
+					//out 是cout取的别名
+ostream& operator<<(ostream &out, Person &p)  
+{			   //本质:operator<<(cout,p)    简化：cout<<p
+			   //cout 只有一个，只能用引用的方式
+	out << "m_A=" << p.m_A << endl;
+	out << "m_B=" << p.m_B << endl;
+	return out;
+}
+
+void test01()
+{
+	Person p1(10, 20);
+
+	//void operator<<(ostream &out, Person &p)
+	//cout << p1;
+
+	//ostream& operator<<(ostream &out, Person &p)
+	cout << p1 << "hello" << endl;
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
