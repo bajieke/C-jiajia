@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+class Building
+{
+public:
+	Building();
+	friend class GoodGay;
+public:
+	string m_SittingRoom;
+private:
+	string m_BedRoom;
+};
+Building::Building()
+{
+	m_SittingRoom = "客厅";
+	m_BedRoom = "卧室";
+}
+
+
+
+class GoodGay
+{
+public:
+	GoodGay()
+	{
+		m_building = new Building;
+	}
+public:
+	void visit();
+public:
+	Building* m_building;   //一个类对象，作为另一个类的共有成员
+};
+void GoodGay::visit()
+{
+	cout << "好基友正在访问" << m_building->m_SittingRoom << endl;
+	cout << "好基友正在访问" << m_building->m_BedRoom << endl;
+}
+
+
+void test01()
+{
+	GoodGay g;
+	g.visit();
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
