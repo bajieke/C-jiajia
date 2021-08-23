@@ -1,0 +1,82 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+//class MyPrint
+//{
+//public:
+//	MyPrint(string test)
+//	{
+//		m_test = test;
+//	}
+//public:
+//	void operator()()
+//	{
+//		cout << m_test << endl;
+//	}
+//public:
+//	string m_test;
+//};
+
+class MyPrint
+{
+public:
+	void operator()(string test)
+	{
+		cout << test << endl;
+	}
+};
+
+void MyPrint02(string test)
+{
+	cout << test << endl;
+}
+
+void test01()
+{
+	//1.
+	//MyPrint myPrint("hello");
+	//myPrint.operator()();
+
+	//2.仿函数
+	MyPrint myPrint;
+	myPrint("hello word");   //使用起来，非常像函数调用，所以叫仿函数
+
+	MyPrint()("匿名函数对象");
+
+	//函数调用
+	MyPrint02("Hello word 2");
+
+}
+
+
+//仿函数非常灵活
+class MyAdd
+{
+public:
+	int operator()(int num1, int num2)
+	{
+		return num1 + num2;
+	}
+};
+
+void test02()
+{
+	MyAdd myAdd;
+	int ret = myAdd(10, 20);
+
+	cout << ret << endl;
+
+	//匿名函数对象
+	cout << MyAdd()(100, 200) << endl;
+
+}
+
+int main()
+{
+	test01();
+	test02();
+
+	system("pause");
+	return 0;
+}
