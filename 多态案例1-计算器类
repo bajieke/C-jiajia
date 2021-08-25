@@ -1,0 +1,109 @@
+#include<iostream>
+using namespace std;
+#include<string>
+
+//开闭原则：对扩展进行开发，对修改进行关闭
+class Calculator
+{
+public:
+	int getResult(string oper)
+	{
+		if (oper == "+")
+		{
+			return m_Num1 + m_Num2;
+		}
+		else if (oper == "-")
+		{
+			return m_Num1 - m_Num2;
+		}
+		else if (oper == "*")
+		{
+			return m_Num1 * m_Num2;
+		}
+	}
+public:
+	int m_Num1;
+	int m_Num2;
+};
+
+void test01()
+{
+	Calculator c;
+	c.m_Num1 = 10;
+	c.m_Num2 = 5;
+
+	cout << c.m_Num1 << " + " << c.m_Num2 << " = " << c.getResult("+") << endl;
+	cout << c.m_Num1 << " - " << c.m_Num2 << " = " << c.getResult("-") << endl;
+	cout << c.m_Num1 << " * " << c.m_Num2 << " = " << c.getResult("*") << endl;
+}
+
+
+class AbstractCalculator
+{
+public:
+	virtual int getResult()
+	{
+		return 0;
+	}
+public:
+	int m_A;
+	int m_B;
+};
+
+class AddCalculator :public AbstractCalculator
+{
+public:
+	int getResult()
+	{
+		return m_A + m_B;
+	}
+};
+
+class SubCalculator : public AbstractCalculator
+{
+public:
+	int getResult()
+	{
+		return m_A - m_B;
+	}
+};
+
+class MulCalculator :public AbstractCalculator
+{
+public:
+	int getResult()
+	{
+		return m_A * m_B;
+	}
+};
+
+void test02()
+{
+	AbstractCalculator* abs = new AddCalculator;
+	abs->m_A = 10;
+	abs->m_B = 5;
+	cout << abs->m_A << " + " << abs->m_B << " = " << abs->getResult() << endl;
+	delete abs;   //new delete 成套使用
+
+	abs = new SubCalculator;
+	abs->m_A = 10;
+	abs->m_B = 5;
+	cout << abs->m_A << " - " << abs->m_B << " = " << abs->getResult() << endl;
+	delete abs;   //abs指向堆区开辟内存，用完之后堆区内存销毁，abs 任然是父类指针
+
+	abs = new MulCalculator;
+	abs->m_A = 10;
+	abs->m_B = 5;
+	cout << abs->m_A << " * " << abs->m_B << " = " << abs->getResult() << endl;
+	delete abs;
+}
+
+
+int main()
+{
+	//test01();
+	test02();
+
+	system("pause");
+	return 0;
+}
