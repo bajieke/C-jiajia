@@ -1,0 +1,40 @@
+#include<iostream>
+using namespace std;
+
+class Base
+{
+public:
+	//纯虚函数
+	virtual void func() = 0;
+};
+
+class Son :public Base
+{
+	void func() 
+	{
+		cout << "Son func()" << endl;
+	}
+};
+
+
+void test01()
+{
+	//纯虚函数无法实例化对象
+	//Base b;
+	//new Base;
+
+	//子类必须重写纯虚函数，否则子类也为抽象类
+	//Son s;   //未重写
+	Son s;
+
+	Base* b = new Son;
+	b->func();
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
