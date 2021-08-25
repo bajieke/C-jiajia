@@ -1,0 +1,45 @@
+#include<iostream>
+using namespace std;
+
+class A
+{
+public:
+	int m_A;
+};
+
+class B :virtual public A { };
+
+class C :virtual public A { };
+
+class D :public B,public C { };
+
+
+void test01()
+{
+	A a;
+	a.m_A = 10;
+
+	B b;
+	b.m_A = 20;
+
+	C c;
+	c.m_A = 30;
+
+	D d;
+
+	d.B::m_A = 200;
+	d.C::m_A = 300;
+
+	cout << d.m_A << endl;   //300
+	cout << a.m_A << endl;	 //10
+	cout << b.m_A << endl;	 //20
+	cout << c.m_A << endl;   //30
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
