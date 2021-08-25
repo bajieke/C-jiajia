@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+
+class Animal
+{
+public:
+	void virtual speak()
+	{
+		cout << "动物在说话。" << endl;
+	}
+};
+
+class Cat :public Animal
+{
+public:
+	void speak()
+	{
+		cout << "小猫在说话。" << endl;
+	}
+};
+
+class Dog :public Animal
+{
+public:
+	void speak()
+	{
+		cout << "小狗在说话。" << endl;
+	}
+};
+
+//地址早早定，在编译阶段已经确定函数地址
+//如果想执行子类的函数，父类函数地址就不能绑定，要在运行阶段再确定
+void doSpeak(Animal& animal)  //父类引用接收子类对象
+{							  //Animal& animal = cat;
+	animal.speak();  //这个函数地址还不能确定下来，多种形态，传入对象不同，不同函数确定不同地址
+}
+
+void test01()
+{
+	Cat cat;
+	doSpeak(cat);
+
+	Dog dog;
+	doSpeak(dog);
+}
+
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
