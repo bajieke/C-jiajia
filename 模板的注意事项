@@ -1,0 +1,46 @@
+#include<iostream>
+using namespace std;
+
+template<typename T>
+void mySwap(T& a, T& b)
+{
+	T temp = a;
+	a = b;
+	b = temp;
+}
+
+//自动推导类型，必须推导出一致的数据类型，才能使用
+void test01()
+{
+	int a = 10;
+	int b = 20;
+	char c = 'c';
+
+	mySwap(a, b);
+
+	//mySwap(a, c);   //错误
+
+	cout << "a = " << a << endl;
+	cout << "b = " << b << endl;
+}
+
+//模板必须却顶出T的类型，才可以使用
+template<typename T>
+void func()
+{
+	cout << "func()" << endl;
+}
+
+void test02()
+{
+	//func();   //出错
+	func<int>();	//正确
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
