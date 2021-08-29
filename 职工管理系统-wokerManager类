@@ -1,0 +1,628 @@
+//wokerManager.h
+
+#pragma once
+#include<iostream>
+using namespace std;
+#include<string>
+#include"woker.h"
+#include<fstream>
+#define FILENAME "empFile.txt"
+
+class WokerManager
+{
+public:
+	WokerManager();
+	~WokerManager();
+
+public:
+	//菜单
+	void Show_Menu();
+
+	//0.退出系统
+	void ExitSystem();
+
+	//1.添加职工
+	void AddEmp();
+
+	//保存文件
+	void save();
+
+	//获取文件人数
+	int get_FileNum();
+
+	//初始化员工
+	void init_Emp();
+
+	//2.显示职工
+	void show_Emp();
+
+	//3.删除职工
+	void del_Emp();
+
+	//判断职工是否存在
+	int is_Exit(int id);	//存在返回对应位置，不存在返回-1
+
+	//4.修改职工
+	void Mod_Emp();
+
+	//5.查找职工
+	void find_Emp();
+
+	//6.按照编号对职工排序
+	void sort_Emp();
+
+	//7.清空文档
+	void clear_Emp();
+
+public:
+	int m_EmpNum;	     //记录职工人数
+	Woker** m_EmpArray;  //保存woker*的指针
+	bool m_FileEmpty;    //文件内有数据为false，文件为空true,文件不存在true
+};
+
+//------------------------------------------------------------------------
+
+//wokerManager.cpp
+
+#include"wokerManager.h"
+
+#include"woker.h"
+#include"Boss.h"
+#include"Manager.h"
+#include"employee.h"
+#include<string>
+
+//构造函数
+WokerManager::WokerManager()
+{
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+
+	//1.文件不存在
+	if (!ifs.is_open())
+	{
+		cout << "文件不存在" << endl;
+		this->m_EmpNum = 0;
+		this->m_EmpArray = NULL;
+		this->m_FileEmpty = true;
+
+		ifs.close();
+		return;
+	}
+    //2.文件存在，内容为空
+	char ch;
+	ifs >> ch;
+	if (ifs.eof())
+	{
+		cout << "文件内无数据" << endl;
+		this->m_EmpNum = 0;
+		this->m_EmpArray = NULL;
+		this->m_FileEmpty =true;
+
+		ifs.close();
+		return;
+	}
+	
+	//3.文件存在，内容不为空
+	int num = this->get_FileNum();
+	cout << "职工个数：" << num << endl;
+	this->m_EmpNum = num;
+	//this->m_FileEmpty = false;
+
+	//开辟空间
+	this->m_EmpArray = new Woker * [this->m_EmpNum];
+
+	//初始化,读取文件数据存到数组中
+	this->init_Emp();
+
+}
+
+//析构函数
+WokerManager::~WokerManager()
+{
+	if (this->m_EmpArray != NULL)
+	{
+		for (int i = 0; i < this->m_EmpNum; i++)
+		{
+			delete this->m_EmpArray[i];
+			this->m_EmpArray[i] = NULL;
+		}
+		delete[] this->m_EmpArray;
+
+		//this->m_EmpNum = 0;
+		//this->m_FileEmpty = true;
+		this->m_EmpArray = NULL;
+	}
+}
+
+//菜单
+void WokerManager::Show_Menu()
+{
+	cout << "\t______________________________" << endl << endl;
+	cout << "\t欢迎来到职工管理系统" << endl;
+	cout << "\t0.退出系统" << endl;
+	cout << "\t1.增加职工信息" << endl;
+	cout << "\t2.显示职工信息" << endl;
+	cout << "\t3.删除离职职工" << endl;
+	cout << "\t4.修改职工信息" << endl;
+	cout << "\t5.查找职工信息" << endl;
+	cout << "\t6.按照编号排序" << endl;
+	cout << "\t7.清空所有文档" << endl;
+	cout << "\t______________________________" << endl << endl;
+}
+
+//01退出系统
+void WokerManager::ExitSystem()
+{
+	cout << "欢迎下次使用" << endl;
+	exit(0);
+}
+
+//1.添加职工
+void WokerManager::AddEmp()
+{
+	int addNum = 0;
+	cout << "请输入要添加的职工人数：";
+	cin >> addNum;
+	
+
+	//将旧的职工，移动到新newSpace
+	if (addNum > 0)
+	{
+		//添加
+		int newSize = this->m_EmpNum + addNum;
+		Woker** newSpace = new Woker * [newSize];   //新开辟的空间，不是改变指向
+
+		//移动旧员工，到新数组
+		if (this->m_EmpArray != NULL)
+		{
+			for (int i = 0; i < this->m_EmpNum; i++)
+			{
+				newSpace[i] = this->m_EmpArray[i];
+			}
+		}
+
+		int id;
+		string name;
+		int dId;
+
+		//添加新职工
+		for (int i = 0; i < addNum; i++)
+		{
+			cout << "请输入添加的第" << i+1 << "个职工编号：";
+			cin >> id;
+
+			cout << "请输入添加的第" << i + 1 << "个职工的姓名：";
+			cin >> name;
+
+			cout << "请输入添加的第" << i + 1 << "个职工的岗位：" << endl;
+			cout << "1.普通员工" << endl;
+			cout << "2.经理" << endl;
+			cout << "3.老板" << endl;
+			cin >> dId;
+
+			Woker* woker = NULL;
+
+			if (dId == 1)
+			{
+				woker = new Employee(id, name, 1);
+			}
+			else if (dId == 2)
+			{
+				woker = new Manager(id, name, 2);
+			}
+			else if (dId == 3)
+			{
+				woker = new Boss(id, name, 3);
+			}
+			else    //---------------------------此时是否应该重新输入
+			{
+				cout << "输入错误";
+			}
+			newSpace[this->m_EmpNum + i] = woker;  //指向改变
+
+			//delete woker;     //出错，ofs那里访问权限出错
+								//自作主张把堆区内容释放，导致无法访问
+								//后续操作系统会进行回收
+		}
+
+		//释放原有空间
+		delete[] this->m_EmpArray;    //可以释放
+
+		//更新
+		this->m_EmpArray = newSpace;
+		this->m_EmpNum = newSize;
+		this->m_FileEmpty = false;
+		//delete newSpace;            //不可以释放
+
+		cout << "成功添加" << addNum << "名新职工！" << endl;
+
+		this->save();
+	}	
+	else
+	{
+		cout << "输入错误" << endl;
+	}
+
+}
+
+//保存文件
+void WokerManager::save()
+{
+	ofstream ofs;
+	ofs.open(FILENAME, ios::out);
+
+	for (int i = 0; i < this->m_EmpNum; i++)
+	{
+		ofs << this->m_EmpArray[i]->m_Id << " "
+		    << this->m_EmpArray[i]->m_Name << " "
+		    << this->m_EmpArray[i]->m_DeptId << endl;
+		
+	}
+	//ofs << this->m_EmpArray->m_Id;   //错误示范
+
+	ofs.close();
+
+}
+
+//获取文件人数
+int WokerManager::get_FileNum()
+{
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+
+	int num = 0;
+
+	int id;
+	string name;
+	int dId;
+
+	if (ifs.is_open())
+	{
+		while (ifs >> id && ifs >> name && ifs >> dId)   //while循环读取，不是if
+		{
+			num++;
+		}
+	}
+
+	ifs.close();
+
+	return num;
+}
+
+//初始化员工
+void WokerManager::init_Emp()
+{
+	ifstream ifs;
+
+	ifs.open(FILENAME, ios::in);
+
+	if (ifs.is_open())
+	{
+		int id;
+		string name;
+		int dId;
+
+		int num = 0;
+
+		while (ifs >> id && ifs >> name && ifs >> dId)
+		{
+			Woker* woker = NULL;
+
+			switch (dId)
+			{
+			case 1:
+				woker = new Employee(id, name, 1);
+				break;
+			case 2:
+				woker = new Manager(id, name, 2);
+				break;
+			case 3:
+				woker = new Boss(id, name, 3);
+				break;
+			}
+			
+			this->m_EmpArray[num] = woker;
+			num++;
+		}
+	}
+	ifs.close();
+}
+
+//2.显示职工
+void WokerManager::show_Emp()
+{
+	if (this->m_FileEmpty)
+	{
+		cout << "文件不存在，或为空" << endl;
+		system("pause");
+		return;
+	}
+	else
+	{
+		for (int i = 0; i < this->m_EmpNum; i++)
+		{
+			//利用多态调用程序接口
+			this->m_EmpArray[i]->showInfo();
+		}
+	}
+
+	system("pause");
+}
+
+//3.删除职工
+void WokerManager::del_Emp()
+{
+	if (this->m_FileEmpty)
+	{
+		cout << "文件不存在或者记录为空" << endl;
+	}
+	else
+	{
+		cout << "请输入离职职工编号：";
+		int id;
+		cin >> id;
+
+		int ret = this->is_Exit(id);
+		if (ret == -1)
+		{
+			cout << "该职工不存在" << endl;
+		}
+		else
+		{
+			//删除职工
+			for (int i = ret; i < this->m_EmpNum - 1; i++)
+			{
+				this->m_EmpArray[i] = this->m_EmpArray[i + 1];
+			}
+
+			//更新职工人数
+			this->m_EmpNum--;
+
+			//更新到文件中
+			this->save();
+
+			cout << "删除成功" << endl;
+		}
+	}
+	system("pause");
+}
+
+//4.修改职工
+void WokerManager::Mod_Emp()
+{
+	if (this->m_FileEmpty)
+	{
+		cout << "文件不存在或记录为空" << endl;
+	}
+	else
+	{
+		cout << "请输入要删除的职工编号；";
+		int index;
+		cin >> index;
+
+		int ret = this->is_Exit(index);
+
+		if (ret == -1)
+		{
+			cout << "不存在该职工" << endl;
+		}
+		else    //该职工存在
+		{
+			cout << "查到了编号为：" << index << "的职工" << endl;
+			delete this->m_EmpArray[ret];  // 把原来堆区内容释放干净
+
+			cout << "请输入修改后的职员编号：";
+			int id=0;
+			cin >> id; 
+
+			cout << "请输入修改后的职员姓名：";
+			string name = " ";
+			cin >> name;
+
+			cout << "请输入修改后的职员岗位：";
+			int dId = 0;
+			cout << "1.普通员工" << endl;
+			cout << "2.经理" << endl;
+			cout << "3.老板" << endl;
+			cin >> dId;
+
+			Woker* woker = NULL;
+
+			if (dId == 1)
+			{
+				woker = new Employee(id, name, 1);
+			}
+			else if (dId == 2)
+			{
+				woker = new Manager(id, name, 2);
+			}
+			else if (dId == 3)
+			{
+				woker = new Boss(id, name, 3);
+			}
+			else
+			{
+				cout << "职工编号输入错误" << endl;
+			}
+
+			this->m_EmpArray[ret] = woker;
+			cout << "修改成功" << endl;
+
+			//保存到文件中
+			this->save();
+		}
+	}
+	system("pause");
+}
+
+//判断职工是否存在
+int WokerManager::is_Exit(int id)	//存在返回对应位置，不存在返回-1
+{
+	//cout << "请输入离职的职工编号：";
+	//int id;
+	//cin >> id;
+
+	for (int i = 0; i < this->m_EmpNum; i++)
+	{
+		if (id == this->m_EmpArray[i]->m_Id)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+//5.查找职工
+void WokerManager::find_Emp()
+{
+	if (this->m_FileEmpty)
+	{
+		cout << "文件不存在或者为空" << endl;
+	}
+	else
+	{
+		cout << "按姓名查找还是按编号查找：" << endl;
+		cout << "1.编号" << endl;
+		cout << "2.姓名" << endl;
+		int select = 0;
+		cin >> select;
+
+		if (select == 1)
+		{
+			//按照编号查找
+			cout << "请输入职工编号：";
+			int id;
+			cin >> id;
+
+			int ret = this->is_Exit(id);
+			if (ret == -1)
+			{
+				cout << "编号为" << id << "的职工不存在" << endl;
+			}
+			else
+			{
+				//职工存在
+				cout << "该职工信息为：" << endl;
+				this->m_EmpArray[ret]->showInfo();
+			}
+		}
+		else if (select == 2)
+		{
+			//按姓名查找
+			cout << "请输入职工姓名：";
+			string name;
+			cin >> name;
+
+			int flag = false;
+
+			for (int i = 0; i < this->m_EmpNum; i++)
+			{
+				if (this->m_EmpArray[i]->m_Name == name)
+				{
+					//存在该职工
+					cout << "查找成功！" << endl;
+					this->m_EmpArray[i]->showInfo();
+					flag = true;
+				}
+				//else
+				//{
+				//	cout << "不存在姓名为" << name << "的职工" << endl;
+				//}
+			}
+			if (flag == false)
+			{
+				cout << "不存在姓名为" << name << "的职工" << endl;
+			}
+		}
+		else
+		{
+			cout << "输入错误" << endl;
+		}
+
+		system("pause");
+	}
+}
+
+//6.按照编号对职工排序
+void WokerManager::sort_Emp()
+{
+	if (this->m_FileEmpty)
+	{
+		cout << "文件不存在或为空！" << endl;
+	}
+	else
+	{
+		//按照职工编号进行选择排序
+		for (int i = 0; i < this->m_EmpNum; i++)
+		{
+			int min = i;
+			//向后比较，找出以i开始的最小数
+			for (int j = i + 1; j < this->m_EmpNum; j++)
+			{
+				if (this->m_EmpArray[min]->m_Id > this->m_EmpArray[j]->m_Id)
+				{
+					min = j;
+				}
+			}//最后比较完，找到此轮最小的赋值为min
+
+			//第i个数，不是后面最小的
+			if (i != min)
+			{
+				//交换
+				Woker* temp = this->m_EmpArray[i];
+				this->m_EmpArray[i] = this->m_EmpArray[min];
+				this->m_EmpArray[min] = temp;
+			}
+		}
+		cout << "排序成功！" << endl;
+		this->save();
+		this->show_Emp();
+	}
+
+	system("pause");
+
+}
+
+//7.清空文档
+void WokerManager::clear_Emp()
+{
+	cout << "确定要清空吗？" << endl;
+	cout << "1.确定" << endl;
+	cout << "2.不确定" << endl;
+
+	int select = 0;
+	cin >> select;
+
+	if (select == 1)
+	{
+		ofstream ofs;
+		ofs.open(FILENAME, ios::trunc);
+
+		ofs.close();  //记得关闭文件
+
+		if (this->m_EmpArray != NULL)
+		{
+			//删除堆区每个职工对象
+			for (int i = 0; i < this->m_EmpNum; i++)
+			{
+				delete this->m_EmpArray[i];
+				this->m_EmpArray[i] = NULL;     //delete之后，置为NULL
+			}
+		}
+		//删除堆区数组指针
+		delete[] this->m_EmpArray;
+
+		this->m_EmpArray = NULL; //delete之后，置为NULL
+		this->m_EmpNum = 0;
+		this->m_FileEmpty = true;
+
+		cout << "清空成功！" << endl;
+	}
+	else
+	{
+		//不清空
+		return;
+	}
+	system("pause");
+}
