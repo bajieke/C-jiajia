@@ -1,0 +1,61 @@
+#include<iostream>
+using namespace std;
+#include"wokerManager.h"
+
+
+int main()
+{
+	WokerManager wm;
+	//WokerManager* wkm=NULL;    //指针指为空，后续发生错误，未改变指向，导致无法访问
+	//WokerManager* wm;          //发生错误，显示未初始化wm
+	int choice = 0;
+
+	while (true)
+	{ 
+		wm.Show_Menu();
+		cout << "请输入选项:";
+		cin >> choice;
+
+		switch (choice)
+		{
+		case 0:	//退出系统
+			wm.ExitSystem();
+			system("cls");
+			break;
+		case 1:	//增加职工信息
+			wm.AddEmp();
+			system("cls");
+			break;
+		case 2:	//显示职工信息
+			wm.show_Emp();
+			system("cls");
+			break;
+		case 3:	//删除职工信息
+			wm.del_Emp();
+			system("cls");
+			break;
+		case 4:	//修改职工信息
+			wm.Mod_Emp();
+			system("cls");
+			break;
+		case 5:	//查找职工信息
+			wm.find_Emp();
+			system("cls");
+			break;
+		case 6:	//按照编号进行排序
+			wm.sort_Emp();
+			system("cls");
+			break;
+		case 7:	//清空文档
+			wm.clear_Emp();
+			system("cls");
+			break;
+		default:
+			system("cls");
+			break;
+		}
+	}
+
+	system("pause");
+	return 0;
+}
