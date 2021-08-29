@@ -1,0 +1,53 @@
+//boss.h
+
+#pragma once
+#include<iostream>
+using namespace std;
+#include<string>
+#include"woker.h"
+
+class Boss :public Woker
+{
+public:
+	Boss(int id,string name, int dId);
+public:
+	//显示职工信息
+	virtual void showInfo();
+
+	//获取职工部门名称
+	virtual string getDeptName();
+};
+
+
+//-------------------------------------------------------
+
+
+
+//boss.cpp
+
+#include"Boss.h"
+
+//构造函数
+Boss::Boss(int id, string name, int dId)
+{
+	this->m_Id = id;
+	this->m_Name = name;
+	this->m_DeptId = dId;
+}
+
+//显示职工信息
+void Boss::showInfo()
+{
+	cout << "职工编号：" << this->m_Id
+		<< "\t职工姓名:" << this->m_Name
+		<< "\t岗位:" << this->getDeptName()
+		<< "\t职责：给经理下派任务" << endl;
+}
+
+//获取职工部门名称
+string Boss::getDeptName()
+{
+	return string("老板");
+
+	//return "老板";
+}
