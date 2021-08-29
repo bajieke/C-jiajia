@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+
+void myPrint(int a, int b)
+{
+	cout << "调用普通函数" << endl;
+}
+
+//光定义不实现，不会出错,只要不调用就行
+void func();
+
+template<typename T>
+void myPrint(T a, T b)
+{
+	cout << "调用模板函数" << endl;
+}
+
+template<typename T>
+void myPrint(T a, T b, T c)
+{
+	cout << "调用重载的函数模板" << endl;
+}
+
+
+void test01()
+{
+	int a = 10;
+	int b = 20;
+
+	//如果普通函数和函数模板都可以实现，优先调用普通函数
+	myPrint(a, b);   //调用普通函数
+
+	//可以通过空参数列表，来强制调用函数模板
+	myPrint<>(a, b);  //调用函数模板
+
+	//myPrint<int>(a, b);  //调用函数模板
+
+	int c = 30;
+	myPrint(a, b, c);  //调用重载的函数模板
+
+	//如果函数模板可以产生更好的匹配，优先调用函数模板
+	char c1 = 'c';
+	char c2 = 'd';
+	myPrint(c1,c2);
+}
+
+int main()
+{
+	test01();
+
+
+	system("pause");
+	return 0;
+}
