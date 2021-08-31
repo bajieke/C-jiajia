@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+
+//父类是一个类模板
+template<class T>
+class Base
+{
+public:
+	T m;
+};
+
+//1.父类是类模板，子类必须指定父类T类型，才能使用
+class Son :public Base<int>   
+{
+
+};
+
+void test01()
+{
+	Son s1;
+	cout << sizeof(s1) << endl;
+}
+
+
+//2.想灵活指定父类中的类型，子类也要声明为模板
+template<class T1,class T2>
+class Son2 :public Base<T2>
+{
+public:
+	Son2()
+	{
+		cout << "T1 的类型：" << typeid(T1).name() << endl;  //int
+		cout << "T2 的类型：" << typeid(T2).name() << endl;  //char
+	}
+public:
+	T1 obj;
+};
+
+void test02()
+{
+	Son2<int, char> s2;
+}
+
+
+
+int main()
+{
+	//test01();
+
+	test02();
+
+	system("pause");
+	return 0;
+}
