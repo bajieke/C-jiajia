@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+#include<algorithm>
+
+void myPrint(int val)
+{
+	cout << val << " ";
+}
+
+void test01()
+{
+	//创建vector容器
+	vector<int> vec;
+
+	//向vector中插入元素
+	vec.push_back(10);
+	vec.push_back(20);
+	vec.push_back(30);
+	vec.push_back(23);
+
+	//vector容器迭代器
+	vector<int>::iterator itBegin = vec.begin(); //vec.begin() 指向容器中第一个元素的位置
+	vector<int>::iterator itEnd = vec.end();  //vec.end() 指向容器中最后一个元素的，下一个位置
+
+	//第 1 种遍历vector容器元素的方法
+	while (itBegin != itEnd)
+	{
+		cout << *itBegin << " ";
+		itBegin++;
+	}
+	cout << endl;
+
+	//第 2 种遍历vector容器元素的方法
+	for (vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+	{
+		cout << *it << " ";
+	}
+	cout << endl;
+
+	//第 3 种遍历vector容器元素的方法
+	for_each(vec.begin(), vec.end(),myPrint);  //myPrint,回调函数
+	cout << endl;
+}
+
+int main()
+{
+	test01();
+
+
+	system("pause");
+	return 0;
+}
